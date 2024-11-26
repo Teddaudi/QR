@@ -5,7 +5,7 @@ const generateQRCode = require('../utils/generateQR');
 
 const generateQR = async(req,res)=>{
     try {
-        const  BASE_URL  = "https://menu-management-system.onrender.com";
+        const  BASE_URL  = "https://menu-management-system.onrender.com/qr";
         const { uniqueId, url, qrImagePath } = await generateQRCode(BASE_URL);
 
         // Save QR code details to the database
@@ -34,7 +34,7 @@ const getQR= async(req,res)=>{
             return res.status(404).json({ error: 'Invalid or already used QR code.' });
         }
 
-        res.json({ message: 'QR code verified successfully.' });
+        res.send('QR code verified successfully.');
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Verification failed.' });
