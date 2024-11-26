@@ -5,7 +5,7 @@ const generateQRCode = require('../utils/generateQR');
 
 const generateQR = async(req,res)=>{
     try {
-        const  BASE_URL  = "http://localhost:3000";
+        const  BASE_URL  = "https://menu-management-system.onrender.com";
         const { uniqueId, url, qrImagePath } = await generateQRCode(BASE_URL);
 
         // Save QR code details to the database
