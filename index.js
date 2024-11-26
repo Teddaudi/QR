@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:3000','https://menu-management-system.onrender.com'],
+    origin: ['http://localhost:3000','https://menu-management-system.onrender.com','https://qr-frontend-indol.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type'],
     credentials: true
