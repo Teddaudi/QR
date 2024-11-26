@@ -2,8 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
+
 const QR = require('./routes/qr.route')
-const serverless = require('serverless-http')
 dotenv.config();
 
 const app = express();
@@ -35,6 +36,8 @@ mongoose.connect(uri, {
 // app.use('/booking', booking);
 // app.use('/contact', contact);
 
+app.use('/qrcodes', express.static(path.join(__dirname, 'public', 'qrcodes')));
+
 app.use('/qr', QR)
 
 app.use('/', (req, res) => {
@@ -49,4 +52,3 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
- module.exports.handler = serverless(app);

@@ -24,23 +24,19 @@ const getQR= async(req,res)=>{
     const { id } = req.params;
 
     try {
-        const qrCode = await QRCode.findOne({ qrCodeId: id });
+        const qrCode = await QRCode.findOneAndUpdate(
+            { qrCodeId: id, isUsed: false },  // Only find QR codes that are not used
+            { isUsed: true, usedAt: new Date() },  // Mark as used and set timestamp
+            { new: true }  // Return the updated document
+        );
 
         if (!qrCode) {
-            return res.status(404).json({ error: 'Invalid QR code.' });
+            return res.status(404).json({ error: 'Invalid or already used QR code.' });
         }
-
-        if (qrCode.isUsed) {
-            return res.status(400).json({ error: 'QR code has already been used.' });
-        }
-
-        // Mark the QR code as used
-        qrCode.isUsed = true;
-        qrCode.usedAt = new Date();
-        await qrCode.save();
 
         res.json({ message: 'QR code verified successfully.' });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Verification failed.' });
     }
 }
