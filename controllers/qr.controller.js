@@ -26,19 +26,49 @@ const generateQR = async (req, res) => {
 
 
 
+// const getQR = async (req, res) => {
+//     const { id } = req.params;
+
+//     try {
+//         const code = await QRCode.findOne({ qrCodeId: id });
+//         console.log(code)
+
+//         const qrCode = await QRCode.findOneAndUpdate(
+//             { qrCodeId: id, isUsed: false },  // Only find QR codes that are not used
+//             { isUsed: true, usedAt: new Date() },  // Mark as used and set timestamp
+//             { new: true }  // Return the updated document
+//         );
+
+//         if (!qrCode) {
+//             return res.status(404).json({ error: 'Invalid or already used QR code.' });
+//         }
+
+//         res.json({ message: 'QR code verified successfully.' });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Verification failed.' });
+//     }
+// };
 const getQR = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const qrCode = await QRCode.findOneAndUpdate(
-            { qrCodeId: id, isUsed: false },  // Only find QR codes that are not used
-            { isUsed: true, usedAt: new Date() },  // Mark as used and set timestamp
-            { new: true }  // Return the updated document
-        );
+        // Find the QR code in the database using the QR code ID
+        const qrCode = await QRCode.findOne({ qrCodeId: id });
 
         if (!qrCode) {
-            return res.status(404).json({ error: 'Invalid or already used QR code.' });
+            return res.status(404).json({ error: 'QR code not found.' });
         }
+
+        // Check if the QR code has already been used
+        if (qrCode.isUsed) {
+            return res.status(400).json({ error: 'QR code has already been used.' });
+        }
+
+        // Update the QR code to mark it as used and set the timestamp
+        qrCode.isUsed = true;
+        qrCode.usedAt = new Date();
+        await qrCode.save();  // Save the updated QR code in the database
 
         res.json({ message: 'QR code verified successfully.' });
     } catch (error) {
