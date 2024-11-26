@@ -36,7 +36,7 @@ mongoose.connect(uri, {
 // app.use('/booking', booking);
 // app.use('/contact', contact);
 
-app.use('/qrcodes', express.static(path.join(__dirname, 'public', 'qrcodes')));
+app.use('/qrcodes', express.static(path.join(__dirname, 'qrcodes')));
 
 app.use('/qr', QR)
 

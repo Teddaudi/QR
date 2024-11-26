@@ -1,17 +1,4 @@
-// const QRCode = require('qrcode');
-// const crypto = require('crypto');
 
-// const generateQRCode = async (baseUrl) => {
-//     const uniqueId = crypto.randomBytes(16).toString('hex');
-//     const url = `${baseUrl}/verify/${uniqueId}`;
-    
-//     const qrImagePath = `qrcodes/qr_${uniqueId}.png`;
-//     await QRCode.toFile(qrImagePath, url);
-
-//     return { uniqueId, url, qrImagePath };
-// };
-
-// module.exports = generateQRCode;
 const QRCode = require('qrcode');
 const crypto = require('crypto');
 const fs = require('fs');

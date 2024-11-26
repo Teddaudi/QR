@@ -12,7 +12,7 @@ const generateQR = async(req,res)=>{
         const qrCode = new QRCode({ qrCodeId: uniqueId });
         await qrCode.save();
 
-        res.status(201).json({ message: 'QR code generated.', url, qrImagePath });
+        res.status(201).json({ message: 'QR code generated.', url, qrImagePath:`${BASE_URL}/qrcodes/qr_${uniqueId}.png` });
     } catch (error) {
         console.log(error)
         res.status(500).json({ error: 'Failed to generate QR code.' });
