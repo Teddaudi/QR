@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3000','https://menu-management-system.onrender.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type'],
     credentials: true
@@ -52,3 +52,4 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+ module.exports.handler = serverless(app);
